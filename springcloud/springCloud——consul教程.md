@@ -22,11 +22,17 @@
 
   - 执行source /etc/profile 使配置生效
 
+## 配置
+
+consoul 支持多种配置方式：命令行，环境变量，配置文件(json文件)。配置优先级按照列出的顺序。
+
+想看具体的详细命令/配置参数请参考官网：[consul官网](https://www.consul.io/docs/)，[配置命令](https://www.consul.io/docs/agent/options.html)
+
 ## 启动
 
-consul分为几种模式，初始化推荐以开发者模式启动，命令为：
+consul主要分为以下几种模式
 
-- 开发者模式：consul agent -dev，不对外暴露服务端口，不能做集群
+- 开发者模式：consul agent -dev，不对外暴露服务端口，不能做集群，**只推荐用于单机开发使用**。
 - 服务器模式：consul agent -server -bootstrap-expect 3 -data-dir /tmp/consul -node=s1 -bind=10.201.102.198 -ui-dir ./consul_ui/ -rejoin -config-dir=/etc/consul.d/ -client 0.0.0.0
   - `-server` ： 定义agent运行在server模式
   - `-bootstrap-expect` ：在一个datacenter中期望提供的server节点数目，当该值提供的时候，consul一直等到达到指定sever数目的时候才会引导整个集群，该标记不能和bootstrap共用
@@ -37,4 +43,10 @@ consul分为几种模式，初始化推荐以开发者模式启动，命令为�
   - `-config-dir`：配置文件目录，里面所有以.json结尾的文件都会被加载
   - `-client`：consul服务侦听地址，这个地址提供HTTP、DNS、RPC等服务，默认是127.0.0.1所以不对外提供服务，如果你要对外提供服务改成0.0.0.0
 - 客户端模式：consul agent -client
+
+## 集群（主从）
+
+1. 先对每个consul增加自己配置文件
+2. 在主节点执行下面的命令：consul agent -server -bootstrap-expect=1 -data-dir=D:\consul -node=agent-one -bind=10.3.0.83 -enable-script-checks=true -config-dir=D:\consul1.5.3\web2.json -client=0.0.0.0 -ui
+3. 在从节点执行下面的命令：consul agent -data-dir=D:\consul -node=agent-two -bind=10.3.0.110 -enable-script-checks=true -config-dir=D:\consul1.5.3\web.json -client=0.0.0.0 -ui
 
