@@ -147,7 +147,7 @@ class FeignClientsRegistrar
 
 ## BeanDefinition
 
-既然是调用spring ioc容器的初始化方法,那么去看看feign容器的初始化方法吧.
+既然是调用spring ioc容器的初始化方法,那么去看看feign容器的AOP方法吧.
 
 ```java
 public interface InvocationHandlerFactory {
