@@ -1,4 +1,4 @@
-# Spring Cloud——配置中心
+# Spring Cloud——Config
 
 ## 是什么
 
